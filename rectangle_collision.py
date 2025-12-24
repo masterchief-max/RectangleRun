@@ -14,8 +14,9 @@ width = 80
 height = 60 # dimensions for enemy
 width1 = 80
 height1 = 60 # dimensions for player
-is_collided = False # for collision 
-is_selected = False # for menu
+is_collided = False # for collision
+is_selected = False
+mode_speed = 0 #speed selected for difficulty
 speed = 0 #speed for enemy
 time = get_time() # time for speed caculation and score
 score = 0 #score
@@ -36,11 +37,13 @@ while not window_should_close():
     if is_selected == False: #basic menu if condition
          draw_text("press Easy(E) OR Hard(H)",0,40,40,WHITE)
          if is_key_down(KEY_E):
-              speed = 1 # changes speed to default 1 for easy mode
+              mode_speed = 1 # changes speed to default 1 for easy mode
               is_selected = True
+              
          if is_key_down(KEY_H):
-              speed = 2 # changes speed to default 2 for hard mode
+              mode_speed = 2 # changes speed to default 2 for hard mode
               is_selected = True
+              
 
     if is_selected == True: # condition to continue after selecting mode
 
@@ -92,11 +95,11 @@ while not window_should_close():
          
 
          if is_collided == False: score = int(get_time() - time)# this line is used to calcuate score
-         if is_collided == False: speed = int(score / 2 ) # used to increase score.speed is derived from score
-         if speed < 1:# sets minmum speed for enemy
-              speed = 1
-         elif speed > 4:# sets maxium speed for enemy
-              speed = 4
+         if is_collided == False: speed = mode_speed + int(score / 2 ) # used to increase score. speed is derived from score and according to difficulty selected
+         if speed < 1: speed = 1# sets minmum speed for enemy
+         elif speed > 4:speed = 4# sets max speed for enemy
+     
+
     end_drawing()
 close_window()
 """
